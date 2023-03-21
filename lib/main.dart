@@ -48,8 +48,6 @@ class _NostrWidgetState extends State<NostrWidget> {
 
   @override
   void initState() {
-    const privKey = "<your private key>";
-    final keys = Keychain(privKey);
     Request requestWithFilter = Request(generate64RandomHexChars(), [
       Filter(
         kinds: [1],
@@ -68,6 +66,32 @@ class _NostrWidgetState extends State<NostrWidget> {
               "content": _msg.message.content
             });
             messages.sort((a, b) {
+              return b['createdAt'].compareTo(a['createdAt']);
+            });
+          });
+        }
+      } catch (err) {}
+    });
+    const privKey = "<your private key>";
+    final keys = Keychain(privKey);
+    Request myRequestWithFilter = Request(generate64RandomHexChars(), [
+      Filter(
+        kinds: [1],
+        limit: 50,
+        authors: [keys.public],
+      )
+    ]);
+    myChannel.sink.add(myRequestWithFilter.serialize());
+    myChannel.stream.listen((payload) {
+      try {
+        final _msg = Message.deserialize(payload);
+        if (_msg.type == 'EVENT') {
+          setState(() {
+            myMessages.add({
+              "createdAt": _msg.message.createdAt,
+              "content": _msg.message.content
+            });
+            myMessages.sort((a, b) {
               return b['createdAt'].compareTo(a['createdAt']);
             });
           });
