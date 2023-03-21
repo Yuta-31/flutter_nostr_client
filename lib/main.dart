@@ -101,7 +101,7 @@ class _NostrWidgetState extends State<NostrWidget> {
     super.initState();
   }
 
-  Widget messageWidget(int index) {
+  Widget messageWidget(List<Map<String, dynamic>> messages, int index) {
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -140,29 +140,47 @@ class _NostrWidgetState extends State<NostrWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('これからすごくなる SNS アプリ'),
-      ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: messages.length,
-          itemBuilder: (context, index) {
-            return messageWidget(index);
-          },
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MessageSendPage(channel),
-              fullscreenDialog: true,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+            title: const Text('これからすごくなる SNS アプリ'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.person)),
+                Tab(icon: Icon(Icons.search)),
+              ],
+            )),
+        body: TabBarView(children: [
+          Center(
+            child: ListView.builder(
+              itemCount: myMessages.length,
+              itemBuilder: (context, index) {
+                return messageWidget(myMessages, index);
+              },
             ),
-          );
-        },
-        child: const Icon(Icons.add),
+          ),
+          Center(
+            child: ListView.builder(
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                return messageWidget(messages, index);
+              },
+            ),
+          ),
+        ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MessageSendPage(channel),
+                fullscreenDialog: true,
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
