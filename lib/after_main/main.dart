@@ -49,7 +49,6 @@ class _NostrWidgetState extends State<NostrWidget> {
       Filter(
         kinds: [1],
         limit: 50,
-        // authors: [keys.public],
       )
     ]);
     channel.sink.add(requestWithFilter.serialize());
