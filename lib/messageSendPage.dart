@@ -3,20 +3,20 @@ import 'package:nostr/nostr.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class MessageSendPage extends StatefulWidget {
-  WebSocketChannel channel;
-  MessageSendPage(this.channel, {super.key});
+  const MessageSendPage({super.key});
 
   @override
-  _MessageSendPageState createState() => _MessageSendPageState(channel);
+  _MessageSendPageState createState() => _MessageSendPageState();
 }
 
 class _MessageSendPageState extends State<MessageSendPage> {
   String _text = ''; // メッセージ
   String _privKey = ''; // 秘密鍵
   final _textEditingController = TextEditingController();
-  WebSocketChannel channel;
+  WebSocketChannel channel =
+      WebSocketChannel.connect(Uri.parse('wss://relay.damus.io'));
 
-  _MessageSendPageState(this.channel);
+  _MessageSendPageState();
 
   // テキストフィールドと _text を合わせる
   void _handleText(String e) {
@@ -101,6 +101,16 @@ class _MessageSendPageState extends State<MessageSendPage> {
               ],
             ),
           ),
+          Container(
+              padding: const EdgeInsets.all(20),
+              child: GestureDetector(
+                  child: const Icon(Icons.login),
+                  onTap: () {
+                    print('pressed!');
+                    var p = Keychain.generate();
+                    print(p.public);
+                    print(p.private);
+                  }))
         ],
       ),
     );
