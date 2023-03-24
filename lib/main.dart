@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nostr/nostr.dart';
 import 'package:nostr_client/global.dart';
 import 'package:nostr_client/messageSendPage.dart';
 import 'package:nostr_client/profile.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
@@ -56,7 +54,7 @@ class _NostrWidgetState extends State<NostrWidget> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MessageSendPage(),
+                builder: (context) => const MessageSendPage(),
                 fullscreenDialog: true,
               ),
             );
