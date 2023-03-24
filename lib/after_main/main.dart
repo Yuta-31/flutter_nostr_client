@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nostr/nostr.dart';
-import 'package:nostr_client/messageSendPage.dart';
+import './messageSendPage.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() {
