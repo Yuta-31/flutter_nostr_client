@@ -7,9 +7,9 @@ environment:
   sdk: ">=2.19.4 <3.0.0"
 
 dependencies:
-  dotenv: ^4.1.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
   nostr: ^1.3.3
   web_socket_channel: ^2.3.0
 
@@ -20,6 +20,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-aseets:
-  - .env
+  assets:
+    - .env
