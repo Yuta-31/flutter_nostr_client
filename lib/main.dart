@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nostr/nostr.dart';
 import 'package:nostr_client/messageSendPage.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:dotenv/dotenv.dart';
 
 void main() {
   runApp(const MainApp());
@@ -71,7 +72,11 @@ class _NostrWidgetState extends State<NostrWidget> {
         }
       } catch (err) {}
     });
-    const privKey = "<your private key>";
+
+    var env = DotEnv(includePlatformEnvironment: true)..load();
+    print('read all vars? ${env.isEveryDefined(['PRIVATE_KEY'])}');
+    late String privKey = env['PRIVATE_KEY'] ?? '';
+    print(privKey);
     final keys = Keychain(privKey);
     Request myRequestWithFilter = Request(generate64RandomHexChars(), [
       Filter(
