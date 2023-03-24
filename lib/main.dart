@@ -32,35 +32,42 @@ class NostrWidget extends StatefulWidget {
 class _NostrWidgetState extends State<NostrWidget> {
   _NostrWidgetState();
 
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _widgets = [const ProfileWidget(), const GlobalWidget()];
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-            title: const Text('これからすごくなる SNS アプリ'),
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.person)),
-                Tab(icon: Icon(Icons.search)),
-              ],
-            )),
-        body: const TabBarView(children: [
-          ProfileWidget(),
-          GlobalWidget(),
-        ]),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const MessageSendPage(),
-                fullscreenDialog: true,
-              ),
-            );
-          },
-          child: const Icon(Icons.add),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('これからすごくなる SNS アプリ'),
+      ),
+      body: _widgets.elementAt(_selectedIndex),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MessageSendPage(),
+              fullscreenDialog: true,
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Global'),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
