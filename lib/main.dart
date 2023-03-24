@@ -62,6 +62,9 @@ class _NostrWidgetState extends State<NostrWidget> {
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 16,
+        selectedIconTheme: const IconThemeData(size: 30),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Global'),
